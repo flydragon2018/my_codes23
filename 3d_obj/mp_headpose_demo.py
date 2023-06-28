@@ -76,18 +76,27 @@ while cap.isOpened():
             # Get the y rotation degree
             x = angles[0] * 360
             y = angles[1] * 360
+            z = angles[2] * 360
 
             # print(y)
 
+            '''
+            text = "This is \n some text"
+            y0, dy = 50, 4
+            for i, line in enumerate(text.split('\n')):
+                y = y0 + i*dy
+                cv2.putText(img, line, (50, y ), cv2.FONT_HERSHEY_SIMPLEX, 1, 2)
+            '''
+
             # See where the user's head tilting
             if y < -10:
-                text = "Looking Left {0:10.4f}, {1:10.4f}".format(x,y)
+                text = "Left x,y,z angles:\n{0:5.2f}, {1:5.2f}, {2:5.2f}".format(x,y,z)
             elif y > 10:
-                text = "Looking Right{0:10.4f}, {1:10.4f}".format(x,y)
+                text = "Right x,y,z angles:\n{0:5.2f}, {1:5.2f}, {2:5.2f}".format(x,y,z)
             elif x < -10:
-                text = "Looking Down{0:10.4f}, {1:10.4f}".format(x,y)
+                text = "Down x,y,z angles:\n{0:5.2f}, {1:5.2f}, {2:5.2f}".format(x,y,z)
             else:
-                text = "rotation x,y :{0:10.4f}, {1:10.4f}".format(x,y)
+                text = "x,y,z angles:\n{0:5.2f}, {1:5.2f}, {2:5.2f}".format(x,y,z)
 
             # Display the nose direction
             nose_3d_projection, jacobian = cv2.projectPoints(nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix)
@@ -98,7 +107,11 @@ while cap.isOpened():
             cv2.line(image, p1, p2, (255, 0, 0), 2)
 
             # Add the text on the image
-            cv2.putText(image, text, (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            y0, dy = 20, 40
+            for i, line in enumerate(text.split('\n')):
+                y = y0 + i*dy
+                cv2.putText(image, line, (y0, y ),  cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            #cv2.putText(image, text, (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
     cv2.imshow('Head Pose Estimation', image)
 
