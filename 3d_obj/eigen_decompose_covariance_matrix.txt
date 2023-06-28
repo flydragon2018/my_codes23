@@ -1,0 +1,38 @@
+
+
+Why does the Eigen decomposition of the covariance matrix of a point cloud give its orientation?
+
+
+
+Let's say you have a (centered) point cloude pi,i=1,...,n
+ and you want to know the orientation of the cloud. How can we formalize this question? E.g. we could ask "in what direction the point cloud is spread out the most?". This means, which unit vector v∈Rn
+ gives the sequence
+
+xi:=v⊤pi,i=1,...,n,
+with the largest variance. Here, v
+ is the direction in which we want to check "how spread out" the cloud is, and v⊤pi
+ is the projection of the point onto this direction. The variance of the sequence is computed via
+
+1n−1∑i=1nx2i=1n−1∑i=1n(v⊤pi)2=1n−1∑i=1n(v⊤pi)(p⊤iv)=1n−1∑i=1nv⊤(pip⊤i)v=v⊤(1n−1∑i=1npip⊤i)=:Pv=v⊤Pv.
+So you try to find the unit vector v
+ which maximizes v⊤Pv
+, where P
+ turns out to be the covariance matrix of your point cloud. If you are familiar with Rayleigh quotients, then it should be clear to you that this is exactly the case when v
+ is the eigenvector to the largest eigenvalue of P
+. You then have
+
+v⊤Pv=v⊤λmaxv=λmax⋅v⊤v1=λmax.
+So, on top of that, the corresponding eigenvalue gives you the variance along the direction v
+.
+
+The argumentation works the same for the "least spread out" direction, and one can argue that the other eigenvectors belong to some intermediate axes.
+
+
+A covariance matrix Σ
+ is symmetric, so there’s a corresponding quadric hypersurface given by the implicit equation xTΣx=1
+. Every real symmetric matrix is orthogonally diagonalizable and, moreover, that basis gives the principal axes of the quadric.
+ So, the eigendecomposition of Σ
+ tells you how this quadric is oriented, among other things.
+
+The covariance matrix of a point cloud captures how the “spread” of random variables that make up the vector interact pairwise.
+ The eigendecomposition in a sense finds an orthogonal transformation of the coordinate system—an orientation for it—that completely decorrelates the data.
