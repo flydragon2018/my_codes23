@@ -1,0 +1,40 @@
+Point cloud
+The code below reads and writes a point cloud.
+
+print("Testing IO for point cloud ...")
+sample_pcd_data = o3d.data.PCDPointCloud()
+pcd = o3d.io.read_point_cloud(sample_pcd_data.path)
+print(pcd)
+o3d.io.write_point_cloud("copy_of_fragment.pcd", pcd)
+Testing IO for point cloud ...
+PointCloud with 113662 points.
+True
+By default, Open3D tries to infer the file type by the filename extension. The following point cloud file types are supported:
+
+Format
+
+Description
+
+xyz
+
+Each line contains [x, y, z], where x, y, z are the 3D coordinates
+
+xyzn
+
+Each line contains [x, y, z, nx, ny, nz], where nx, ny, nz are the normals
+
+xyzrgb
+
+Each line contains [x, y, z, r, g, b], where r, g, b are in floats of range [0, 1]
+
+pts
+
+The first line is an integer representing the number of points. The subsequent lines follow one of these formats: [x, y, z, i, r, g, b], [x, y, z, r, g, b], [x, y, z, i] or [x, y, z], where x, y, z, i are of type double and r, g, b are of type uint8
+
+ply
+
+See Polygon File Format, the ply file can contain both point cloud and mesh data
+
+pcd
+
+See Point Cloud Data
